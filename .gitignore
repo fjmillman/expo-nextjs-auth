@@ -1,0 +1,38 @@
+# dependencies
+/node_modules/
+
+# debug
+npm-debug.*
+
+# misc
+.DS_Store
+.env*
+
+# expo
+.expo
+
+# expo web
+web-build
+web-report
+
+# expo native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# next.js
+/.next/
+/out/
+
+# next.js production
+/build/
+
+# next.js dependencies
+/.pnp/
+.pnp.js
+
+# vercel
+.vercel
