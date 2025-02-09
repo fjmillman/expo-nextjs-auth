@@ -1,56 +1,60 @@
 {
   "name": "expo-nextjs",
-  "version": "1.0.0",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "prepare": "husky install",
-    "expo:start": "expo start",
-    "expo:android": "expo start --android",
-    "expo:ios": "expo start --ios",
-    "expo:eject": "expo eject",
-    "next:dev": "next dev",
-    "next:web": "next",
-    "next:build": "next build",
-    "next:eject": "next-expo customize",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "build": "turbo run build",
+    "clean": "git clean -xdf node_modules .turbo coverage junit.xml",
+    "clean:workspaces": "turbo run clean",
+    "cm": "git-cz",
+    "dev": "turbo watch dev --continue",
+    "dev:native": "turbo watch dev -F @/native",
+    "dev:web": "turbo watch dev -F @/web",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "prepare": "husky",
+    "test": "turbo run @/ui#test @/web#test @/native#test",
+    "test:ci": "turbo run test:ci",
+    "test:copy-coverage": "mkdir -p coverage && cp apps/native/coverage/coverage-final.json coverage/coverage-native.json && cp apps/web/coverage/coverage-final.json coverage/coverage-web.json && cp packages/ui/coverage/coverage-final.json coverage/coverage-ui.json",
+    "test:coverage": "turbo run test:coverage && pnpm test:merge-coverage",
+    "test:merge-coverage": "pnpm test:copy-coverage && nyc report -t coverage --reporter=json --reporter=lcov --reporter=text",
+    "test:watch": "turbo run test:watch",
+    "typecheck": "turbo run typecheck",
+    "typesync": "pnpm dlx typesync"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --fix"
+    "**/*.{js,ts,tsx,cjs,mjs}": "pnpm lint:fix --no-warn-ignored --",
+    "**/*.{js,ts,tsx,cjs,mjs,json}": "prettier --write"
   },
-  "dependencies": {
-    "expo": "^44.0.0",
-    "next": "~12.1.0",
-    "next-compose-plugins": "^2.2.1",
-    "next-fonts": "^1.5.1",
-    "next-images": "^1.8.4",
-    "next-transpile-modules": "^9.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
-    "react-native-web": "0.17.1"
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/prompt"
+    }
   },
+  "prettier": "@/prettier-config",
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@expo/next-adapter": "^3.1.20",
-    "@types/node": "^17.0.21",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
-    "@types/react-native": "^0.66.16",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
-    "babel-loader": "^8.2.3",
-    "babel-preset-expo": "^9.0.2",
-    "eslint": "^8.10.0",
-    "eslint-config-next": "^12.1.0",
-    "eslint-config-universe": "^10.0.0",
-    "husky": "^7.0.0",
-    "jest": "^26.6.3",
-    "jest-expo": "^44.0.1",
-    "lint-staged": "^12.3.4",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.5",
-    "webpack": "^5.69.1"
+    "@/prettier-config": "workspace:*",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@commitlint/prompt": "^19.7.1",
+    "@types/lint-staged": "~13.3.0",
+    "commitizen": "^4.3.1",
+    "commitlint-config-monorepo": "^2.0.2",
+    "husky": "catalog:",
+    "lint-staged": "catalog:",
+    "prettier": "catalog:",
+    "ts-node": "11.0.0-beta.1",
+    "turbo": "^2.4.0",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.2.1+sha512.398035c7bd696d0ba0b10a688ed558285329d27ea994804a52bad9167d8e3a72bcb993f9699585d3ca25779ac64949ef422757a6c31102c12ab932e5cbe5cc92",
+  "engines": {
+    "node": ">=23.7.0",
+    "pnpm": "^10.2.1"
+  },
+  "overrides": {
+    "ts-node": "11.0.0-beta.1"
   }
 }

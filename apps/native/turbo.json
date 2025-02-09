@@ -1,0 +1,16 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "outputs": [".expo/**"]
+    },
+    "dev": {
+      "persistent": true,
+      "interactive": true
+    },
+    "test:coverage": {
+      "outputs": ["coverage/**"]
+    }
+  }
+}

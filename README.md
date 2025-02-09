@@ -1,1 +1,1 @@
-# Expo NextJS Auth
+# Expo NextJS

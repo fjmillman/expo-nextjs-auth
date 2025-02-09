@@ -1,0 +1,15 @@
+{
+  "extends": "@/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "jsx": "react-native",
+    "types": ["../../tooling/eslint/types"],
+    "checkJs": false,
+    "moduleSuffixes": [".ios", ".android", ".native", ""]
+  },
+  "include": ["src", "*.ts", "*.js", ".expo/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
